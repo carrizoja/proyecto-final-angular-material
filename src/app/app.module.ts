@@ -13,6 +13,7 @@ import { ThemeSwitcherComponent } from './shared/components/theme-switcher/theme
 import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from './shared/layout/toolbar/toolbar.component';
 import { NavbarComponent } from './shared/layout/navbar/navbar.component';
+import { StudentsPageDirective } from './pages/students-page.directive';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NavbarComponent } from './shared/layout/navbar/navbar.component';
     StudentDialogComponent,
     ThemeSwitcherComponent,
     ToolbarComponent,
-    NavbarComponent
+    NavbarComponent,
+    StudentsPageDirective
   ],
   imports: [
     BrowserModule,
