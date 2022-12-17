@@ -1,0 +1,13 @@
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+}
+
+.navbar {
+    background-image: linear-gradient(to bottom, #08c6f6, #0b5ef7);
+    margin-top: 10px;
+    border-radius: 0px 5px 5px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
