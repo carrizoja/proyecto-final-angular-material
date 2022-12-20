@@ -10,6 +10,7 @@ import { StudentDialogComponent } from '../../shared/components/student-dialog/s
 })
 export class StudentsPageComponent {
 
+  public hover: number = 0;
   students: Student[] = [
     new Student (1, 'Jose', 'Carrizo', true),
     new Student (2, 'Sofi', 'Ceria', false),
