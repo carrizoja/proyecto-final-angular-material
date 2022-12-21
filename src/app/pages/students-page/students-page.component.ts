@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/models/student.model';
+import { StudentDialogDescriptionComponent } from 'src/app/shared/components/student-dialog-description/student-dialog-description.component';
 import { StudentDialogComponent } from '../../shared/components/student-dialog/student-dialog.component';
 
 @Component({
@@ -12,13 +13,13 @@ export class StudentsPageComponent {
 
   public hover: number = 0;
   students: Student[] = [
-    new Student (1, 'Jose', 'Carrizo', true),
-    new Student (2, 'Sofi', 'Ceria', false),
-    new Student (3, 'Walter', 'Leguizamon', true),
-    new Student (4, 'Ciro', 'Pertusi', false),
+    new Student (1, 'Jose', 'Carrizo','carrizoja@gmail.com', true),
+    new Student (2, 'Sofi', 'Ceria', 'soficeria@outlook.com', false),
+    new Student (3, 'Walter', 'Leguizamon', 'walterleguizamon@live.com', true),
+    new Student (4, 'Ciro', 'Pertusi', 'ciro.pertusi@gmail.com', false),
   ]
 
-  displayedColumns = ['id', 'firstName', 'lastName', 'isActive', 'edit', 'delete']
+  displayedColumns = ['firstName', 'lastName','email', 'isActive', 'edit', 'delete', 'description']
 
   constructor(private readonly dialogService: MatDialog) {}
     addStudent() {
@@ -28,7 +29,7 @@ export class StudentsPageComponent {
       if (value) {
         const lastId = this.students[this.students.length - 1]?.id;
        
-        this.students = [...this.students, new Student(lastId + 1, value.firstName, value.lastName, true)]
+        this.students = [...this.students, new Student(lastId + 1, value.firstName, value.lastName, value.email, true)]
 
 
       }
@@ -39,11 +40,28 @@ export class StudentsPageComponent {
       this.students = this.students.filter((s) => s.id !== student.id)
     }
 
+    changeActive(student: Student) {
+      this.students = this.students.map((s) => {
+        if (s.id === student.id) {
+          return new Student(s.id, s.firstName, s.lastName, s.email, !s.isActive)
+        }
+        return s
+      })
+    }
+
+    showDescriptionStudent(student: Student) {
+      this.dialogService.open(StudentDialogDescriptionComponent, {
+        data: student
+      })
+        
+    }
+
     editStudent(student: Student) {
       const dialog = this.dialogService.open(StudentDialogComponent, {
         data: {
           firstName: student.firstName,
-          lastName: student.lastName
+          lastName: student.lastName,
+          email: student.email
         }
       })
 
@@ -51,12 +69,17 @@ export class StudentsPageComponent {
         if (data) {
           this.students = this.students.map((s) => {
             if (s.id === student.id) {
-              return new Student(s.id, data.firstName, data.lastName, s.isActive)
+              return new Student(s.id, data.firstName, data.lastName, data.email, s.isActive)
             }
             return s
           })
         }
       })
+
+    
+
+
+
     }
 
   }

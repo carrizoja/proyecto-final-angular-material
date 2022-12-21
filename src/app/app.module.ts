@@ -14,6 +14,9 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from './shared/layout/toolbar/toolbar.component';
 import { NavbarComponent } from './shared/layout/navbar/navbar.component';
 import { StudentsPageDirective } from './pages/students-page.directive';
+import { FullnamePipePipe } from './shared/components/student-dialog-description/fullname-pipe.pipe';
+import { StudentDialogDescriptionComponent } from './shared/components/student-dialog-description/student-dialog-description.component';
+import { ErrorHelperComponent } from './shared/components/error-helper/error-helper.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { StudentsPageDirective } from './pages/students-page.directive';
     ThemeSwitcherComponent,
     ToolbarComponent,
     NavbarComponent,
-    StudentsPageDirective
+    StudentsPageDirective,
+    FullnamePipePipe,
+    StudentDialogDescriptionComponent,
+    ErrorHelperComponent
   ],
   imports: [
     BrowserModule,
