@@ -12,7 +12,7 @@ import { Validators } from '@angular/forms';
   styles: [
   ]
 })
-export class StudentDialogComponent implements OnInit {
+export class StudentDialogComponent  {
 firstNameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
 lastNameControl = new FormControl('', [Validators.required,Validators.minLength(2)] );
 emailControl = new FormControl('', [Validators.required, Validators.email]);
@@ -33,9 +33,7 @@ constructor(private readonly dialogRef: DialogRef, @Inject(MAT_DIALOG_DATA) publ
    
   }
  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+
 
 
 close() {

@@ -76,10 +76,6 @@ export class StudentsPageComponent {
         }
       })
 
-    
-
-
-
     }
 
   }
