@@ -15,10 +15,10 @@ constructor(private readonly router : ActivatedRoute,
 
 }
 ngOnInit() : void {
-  this.router.params.subscribe(params =>{
+ /*  this.router.params.subscribe(params =>{
     console.log(params)
     console.log(this.studentsService.getStudentById(params['id']))
-  });
+  }); */
   
 }
 

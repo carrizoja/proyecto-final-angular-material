@@ -13,6 +13,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FullnamePipePipe } from './components/student-dialog-description/fullname-pipe.pipe';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { CourseDialogComponent } from './components/course-dialog/course-dialog.component';
+import { CourseDialogDescriptionComponent } from './components/course-dialog-description/course-dialog-description.component';
+import { RegistrationDialogComponent } from './components/registration-dialog/registration-dialog.component';
+import { RegistrationDialogDescriptionComponent } from './components/registration-dialog-description/registration-dialog-description.component';
 
 
 
@@ -28,7 +32,11 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     SidenavComponent,
     ToolbarComponent,
     FullnamePipePipe,
-    NotFoundComponent
+    NotFoundComponent,
+    CourseDialogComponent,
+    CourseDialogDescriptionComponent,
+    RegistrationDialogComponent,
+    RegistrationDialogDescriptionComponent
 
   ],
   imports: [
