@@ -28,7 +28,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     MyMaterialModule
   ],
   exports: [
-    StudentsPageComponent
+    StudentsPageComponent,
+    HomePageComponent
   ]
 })
 export class PagesModule { }

@@ -3,11 +3,17 @@
     <form class="flex flex-column" [formGroup]="courseForm">
         <div class="mb-2">
             <mat-form-field appearance="fill">
-                <mat-label>Name</mat-label>
-                <input [formControl]="nameControl" matInput>
-                <app-error-helper [control]="nameControl"></app-error-helper>
+                <mat-label>Code</mat-label>
+                <input [formControl]="courseCodeControl" matInput>
+                <app-error-helper [control]="courseCodeControl"></app-error-helper>
             </mat-form-field>
+
         </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input [formControl]="nameControl" matInput>
+            <app-error-helper [control]="nameControl"></app-error-helper>
+        </mat-form-field>
         <mat-label>Active</mat-label>
         <mat-slide-toggle [checked]="true"></mat-slide-toggle>
     </form>

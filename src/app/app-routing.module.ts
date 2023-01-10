@@ -38,10 +38,10 @@ const routes: Routes = [
         path: 'registrations',
         component: RegistrationsPageComponent
       },
-      {
+    {
         path: '**',
-        component:NotFoundComponent
-      }
+        component:HomePageComponent
+      } 
     ]
   },
   {
@@ -57,7 +57,11 @@ const routes: Routes = [
         component:NotFoundComponent
       }
     ]
-  }
+  },
+  {
+    path: '**',  
+    redirectTo: '/home'   
+    }
 ];
 
 

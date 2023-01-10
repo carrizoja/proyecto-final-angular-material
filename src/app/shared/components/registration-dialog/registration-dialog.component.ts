@@ -34,8 +34,6 @@ constructor(private readonly dialogRef: DialogRef, @Inject(MAT_DIALOG_DATA) publ
   }
  }
 
-
-
 close() {
   this.dialogRef.close();
 }

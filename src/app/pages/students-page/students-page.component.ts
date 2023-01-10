@@ -1,59 +1,61 @@
-import { Component, OnInit} from '@angular/core';
+import { Component,OnDestroy} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/models/student.model';
 import { StudentDialogDescriptionComponent } from 'src/app/shared/components/student-dialog-description/student-dialog-description.component';
 import { StudentDialogComponent } from '../../shared/components/student-dialog/student-dialog.component';
 import { StudentsService } from 'src/app/services/students.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 @Component({
   selector: 'app-students-page',
   templateUrl: './students-page.component.html',
   styleUrls: ['./students-page.component.scss']
 })
-export class StudentsPageComponent implements OnInit{
-
-  public students$!: Observable<Student[]>;
-  public hover: number = 0;
-students: Student[] = [
-    new Student (1, 'Jose', 'Carrizo','carrizoja@gmail.com', true),
-    new Student (2, 'Sofi', 'Ceria', 'soficeria@outlook.com', false),
-    new Student (3, 'Walter', 'Leguizamon', 'walterleguizamon@live.com', true),
-    new Student (4, 'Ciro', 'Pertusi', 'ciro.pertusi@gmail.com', false),
-  ]  
-
+export class StudentsPageComponent implements OnDestroy{
   displayedColumns = ['firstName', 'lastName','email', 'isActive', 'edit', 'delete', 'description']
+  public hover: number = 0;
+  students: Observable<Student[]>
+  private destroyed$ = new Subject();
 
+  constructor(private readonly dialogService: MatDialog, private studentsService: StudentsService) {
+    this.students = this.studentsService.students$;
+   }
+  
+  ngOnDestroy(): void {
+   this.destroyed$.next(true);
+    
+  }
 
-  constructor(private readonly dialogService: MatDialog, private studentsService: StudentsService) {}
-  ngOnInit(): void {
-    this.students$ = this.studentsService.studentsList();
+  editStudent(element: Student) {
+    const dialog = this.dialogService.open(StudentDialogComponent, {
+      data: element
+    })
+
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.studentsService.EditStudent(element.id, data)
+      }
+    })
+
   }
 
     addStudent() {
      const dialog = this.dialogService.open(StudentDialogComponent)
 
-     dialog.afterClosed().subscribe((value) => {
-      if (value) {
-     const lastId = this.students[this.students.length - 1]?.id;
-       
-        this.students = [...this.students, new Student(lastId + 1, value.firstName, value.lastName, value.email, true)]
- 
+     dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.studentsService.AddStudent({firstName: data.firstName, lastName: data.lastName, email: data.email})
  
       }
      })
     }
 
-    removeStudent(student: Student) {
-     this.students = this.students.filter((s) => s.id !== student.id)  
+    removeStudent(element: Student) {
+      this.studentsService.removeStudent(element.id)
+     
     }
 
     changeActive(student: Student) {
-     this.students = this.students.map((s) => {
-        if (s.id === student.id) {
-          return new Student(s.id, s.firstName, s.lastName, s.email, !s.isActive)
-        }
-        return s
-      }) 
+      this.studentsService.changeActive(student)
     }
 
     showDescriptionStudent(student: Student) {
@@ -63,27 +65,7 @@ students: Student[] = [
         
     }
 
-    editStudent(student: Student) {
-      const dialog = this.dialogService.open(StudentDialogComponent, {
-        data: {
-          firstName: student.firstName,
-          lastName: student.lastName,
-          email: student.email
-        }
-      })
-
-      dialog.afterClosed().subscribe((data) => {
-        if (data) {
-        this.students = this.students.map((s) => {
-            if (s.id === student.id) {
-              return new Student(s.id, data.firstName, data.lastName, data.email, s.isActive)
-            }
-            return s
-          }) 
-        }
-      })
-
-    }
+   
 
   
   }

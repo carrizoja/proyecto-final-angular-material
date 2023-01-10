@@ -1,53 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Registration } from 'src/app/models/registration.model';
 import { RegistrationDialogDescriptionComponent } from 'src/app/shared/components/registration-dialog-description/registration-dialog-description.component';
 import { RegistrationDialogComponent } from 'src/app/shared/components/registration-dialog/registration-dialog.component';
+import { Observable, Subject } from 'rxjs';
+import { RegistrationsService } from 'src/app/services/registrations.service';
 
 @Component({
   selector: 'app-registrations-page',
   templateUrl: './registrations-page.component.html',
   styleUrls: ['./registrations-page.component.scss']
 })
-export class RegistrationsPageComponent {
-
-  public hover: number = 0;
-registrations: Registration[] = [
-    new Registration (1, 'José', 'Carrizo','23023', 'Maths'),
-    new Registration (2, 'Sofia', 'Ceria','17342', 'Physics'),
- 
-  ]  
-
+export class RegistrationsPageComponent implements OnDestroy {
   displayedColumns = ['firstName','lastName', 'courseCode', 'courseName','edit','delete', 'description']
+  public hover: number = 0;
+  registrations: Observable<Registration[]>;
+  private destroyed$ = new Subject();
 
-  constructor(private readonly dialogService: MatDialog) {}
+
   
+
+  constructor(private readonly registrationsService:RegistrationsService,private readonly dialogService: MatDialog) {
+    this.registrations = this.registrationsService.registrations$;
+   }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next(true);
+  }
+
+
 
   addRegistration() {
     const dialog = this.dialogService.open(RegistrationDialogComponent)
 
-    dialog.afterClosed().subscribe((value) => {
-     if (value) {
-    const lastId = this.registrations[this.registrations.length - 1]?.id;
-      
-       this.registrations = [...this.registrations, new Registration(lastId + 1,value.firstName, value.lastName,value.courseCode, value.courseName)]
-
-     }
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.registrationsService.addRegistration({firstName: data.firstName, lastName: data.lastName, courseCode: data.courseCode, courseName: data.courseName})
+      }
     })
+  
    }
 
    removeRegistration(registration: Registration) {
-    this.registrations = this.registrations.filter((s) => s.id !== registration.id)  
+      this.registrationsService.removeRegistration(registration.id)
    }
 
-/*    changeActive(course: Course) {
-    this.courses = this.courses.map((s) => {
-       if (s.id === course.id) {
-         return new Course(s.id,s.courseCode, s.name, !s.isActive)
-       }
-       return s
-     }) 
-   } */
+
 
    showDescriptionRegistration(registration: Registration) {
      this.dialogService.open(RegistrationDialogDescriptionComponent, {
@@ -58,23 +56,12 @@ registrations: Registration[] = [
 
    editRegistration(registration: Registration) {
      const dialog = this.dialogService.open(RegistrationDialogComponent, {
-       data: {
-         firstName: registration.firstName,
-          lastName: registration.lastName,
-          courseCode: registration.courseCode,
-          courseName: registration.courseName
-
-       }
+       data: registration
      })
 
      dialog.afterClosed().subscribe((data) => {
        if (data) {
-       this.registrations = this.registrations.map((s) => {
-           if (s.id === registration.id) {
-             return new Registration(s.id,data.firstName,data.lastName,data.courseCode, data.courseName)
-           }
-           return s
-         }) 
+          this.registrationsService.editRegistration(registration.id, data)
        }
      })
 

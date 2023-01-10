@@ -1,7 +1,7 @@
 <div class="button-container">
     <button (click)="addCourse()" mat-flat-button color="primary">Add Course</button>
 </div>
-<table mat-table [dataSource]="courses">
+<table mat-table [dataSource]="(courses | async) || []">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>
             <p appCoursesPage>

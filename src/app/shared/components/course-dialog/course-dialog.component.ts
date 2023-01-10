@@ -11,16 +11,19 @@ import { Course } from '../../../models/course.model';
 })
 export class CourseDialogComponent {
   nameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  courseCodeControl = new FormControl('', [Validators.required,Validators.minLength(2)] );
   isActiveToogle = true;
 
 courseForm = new FormGroup({
   name: this.nameControl,
+  courseCode: this.courseCodeControl,
  
 })
 
 constructor(private readonly dialogRef: DialogRef, @Inject(MAT_DIALOG_DATA) public data: Course | null) {
   if (data) {
     this.nameControl.setValue(data.name);
+    this.courseCodeControl.setValue(data.courseCode);
   
   }
  }

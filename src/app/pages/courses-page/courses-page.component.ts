@@ -1,53 +1,53 @@
-import { Component} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDialogDescriptionComponent } from 'src/app/shared/components/course-dialog-description/course-dialog-description.component';
 import { CourseDialogComponent } from 'src/app/shared/components/course-dialog/course-dialog.component';
 import { Course } from '../../models/course.model';
+import { Observable, Subject } from 'rxjs';
+import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.scss']
 })
-export class CoursesPageComponent  {
-
-  public hover: number = 0;
-courses: Course[] = [
-    new Course (1,'23023', 'Maths', true),
-    new Course (2,'17342', 'Physics', false),
-  
-  ]  
+export class CoursesPageComponent implements OnDestroy  {
 
   displayedColumns = ['courseCode','name','isActive', 'edit', 'delete', 'description']
+  public hover: number = 0;
+  courses: Observable<Course[]> | undefined;
+  private destroyed$ = new Subject();
 
-  constructor(private readonly dialogService: MatDialog) {}
+
  
+
+  constructor(private readonly CoursesService: CoursesService,private readonly dialogService: MatDialog) {
+    this.courses = this.CoursesService.courses$;
+   }
+  
+ ngOnDestroy(): void {
+    this.destroyed$.next(true);
+ }
 
 
   addCourse() {
     const dialog = this.dialogService.open(CourseDialogComponent)
+    dialog.afterClosed().subscribe((data) => {
+      if (data) {
+        this.CoursesService.addCourse({name: data.name, courseCode: data.courseCode})
 
-    dialog.afterClosed().subscribe((value) => {
-     if (value) {
-    const lastId = this.courses[this.courses.length - 1]?.id;
-      
-       this.courses = [...this.courses, new Course(lastId + 1,value.courseCode, value.name, true)]
-
-     }
-    })
    }
+  }
+   )
+  }
 
-   removeCourse(course: Course) {
-    this.courses = this.courses.filter((s) => s.id !== course.id)  
+   removeCourse(element: Course) {
+      this.CoursesService.removeCourse(element.id)
+    
    }
 
    changeActive(course: Course) {
-    this.courses = this.courses.map((s) => {
-       if (s.id === course.id) {
-         return new Course(s.id,s.courseCode, s.name, !s.isActive)
-       }
-       return s
-     }) 
+      this.CoursesService.changeActive(course)
    }
 
    showDescriptionCourse(course: Course) {
@@ -59,21 +59,20 @@ courses: Course[] = [
 
    editCourse(course: Course) {
      const dialog = this.dialogService.open(CourseDialogComponent, {
-       data: {
-         name: course.name,        
-       }
+       data: course
+            
      })
 
      dialog.afterClosed().subscribe((data) => {
        if (data) {
-       this.courses = this.courses.map((s) => {
-           if (s.id === course.id) {
-             return new Course(s.id,data.courseCode, data.name, s.isActive)
-           }
-           return s
-         }) 
+          this.CoursesService.editCourse(course.id, data)
+      
        }
      })
 
-   }
+ }
+
+ 
+
+
 }

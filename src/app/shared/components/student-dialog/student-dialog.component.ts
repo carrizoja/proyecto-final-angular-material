@@ -16,12 +16,13 @@ export class StudentDialogComponent  {
 firstNameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
 lastNameControl = new FormControl('', [Validators.required,Validators.minLength(2)] );
 emailControl = new FormControl('', [Validators.required, Validators.email]);
-isActiveToogle = true;
+isActiveToogle = new FormControl(false);
 
 studentForm = new FormGroup({
   firstName: this.firstNameControl,
   lastName: this.lastNameControl,
   email: this.emailControl,
+  isActive: this.isActiveToogle,
 
 })
 
@@ -30,6 +31,8 @@ constructor(private readonly dialogRef: DialogRef, @Inject(MAT_DIALOG_DATA) publ
     this.firstNameControl.setValue(data.firstName);
     this.lastNameControl.setValue(data.lastName);
     this.emailControl.setValue(data.email);
+    this.isActiveToogle.setValue(data.isActive);
+    
    
   }
  }
