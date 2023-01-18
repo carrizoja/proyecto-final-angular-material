@@ -5,18 +5,36 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { StudentsPageComponent } from './pages/students-page/students-page.component';
 import { ProfessorsPageComponent } from './pages/professors-page/professors-page.component';
 import { CleanLayoutComponent } from './layouts/clean-layout/clean-layout.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
+/* import { LoginPageComponent } from './pages/login-page/login-page.component'; */
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { StudentDetailComponent } from './pages/student-detail/student-detail.component';
 import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
 import { RegistrationsPageComponent } from './pages/registrations-page/registrations-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { LayoutsModule } from './layouts/layouts.module';
+
 
 
 const routes: Routes = [
   {
+    path: 'dashboard',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./layouts/layouts.module').then((module) => module.LayoutsModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((module) => module.AuthModule)
+  },
+  {
+    path: '**', 
+    redirectTo: 'auth'
+  }
+
+/*  {
+    
     path: '',
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutComponent,  
     children: [
       {
         path: 'students',
@@ -58,10 +76,11 @@ const routes: Routes = [
       }
     ]
   },
-  {
+
+   {
     path: '**',  
     redirectTo: '/home'   
-    }
+    }   */
 ];
 
 

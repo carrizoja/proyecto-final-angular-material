@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-proyect-coderhouse": {
+      "hosting": {
+        "proyecto-final-Angular-Material": [
+          "angular-proyect-coderhouse"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-proyect-coderhouse"
+  }
+}

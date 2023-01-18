@@ -1,5 +1,5 @@
 <div class="button-container">
-    <button (click)="addStudent()" mat-flat-button color="primary">Add Student</button>
+    <button (click)="addStudentToAPI()" mat-flat-button color="primary">Add Student</button>
 </div>
 <table mat-table [dataSource]="(students | async) || []">
     <ng-container matColumnDef="id">
@@ -43,7 +43,7 @@
             <p appStudentsPage>Edit</p>
         </th>
         <td mat-cell *matCellDef="let element">
-            <button (click)="editStudent(element)" mat-icon-button color="primary">
+            <button (click)="editStudentFromAPI(element)" mat-icon-button color="primary">
           <mat-icon>edit</mat-icon>
         </button>
         </td>
@@ -53,7 +53,7 @@
             <p appStudentsPage>Delete</p>
         </th>
         <td mat-cell *matCellDef="let element">
-            <button (click)="removeStudent(element)" mat-icon-button color="warn">
+            <button (click)="deleteStudentFromAPI(element.id)" mat-icon-button color="warn">
             <mat-icon>delete</mat-icon>
             </button>
         </td>

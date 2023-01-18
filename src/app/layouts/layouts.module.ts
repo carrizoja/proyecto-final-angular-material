@@ -7,9 +7,6 @@ import { RouterModule } from '@angular/router';
 import { CleanLayoutComponent } from './clean-layout/clean-layout.component';
 
 
-
-
-
 @NgModule({
   declarations: [
     DashboardLayoutComponent,
@@ -20,8 +17,8 @@ import { CleanLayoutComponent } from './clean-layout/clean-layout.component';
   imports: [
     CommonModule,
     SharedModule,
-    PagesModule,
-    RouterModule
+    RouterModule,
+    PagesModule
   ],
   exports: [
     DashboardLayoutComponent

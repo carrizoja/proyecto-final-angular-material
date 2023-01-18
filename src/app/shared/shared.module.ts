@@ -17,6 +17,8 @@ import { CourseDialogComponent } from './components/course-dialog/course-dialog.
 import { CourseDialogDescriptionComponent } from './components/course-dialog-description/course-dialog-description.component';
 import { RegistrationDialogComponent } from './components/registration-dialog/registration-dialog.component';
 import { RegistrationDialogDescriptionComponent } from './components/registration-dialog-description/registration-dialog-description.component';
+import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinner.component';
+
 
 
 
@@ -36,7 +38,8 @@ import { RegistrationDialogDescriptionComponent } from './components/registratio
     CourseDialogComponent,
     CourseDialogDescriptionComponent,
     RegistrationDialogComponent,
-    RegistrationDialogDescriptionComponent
+    RegistrationDialogDescriptionComponent,
+    CustomSpinnerComponent
 
   ],
   imports: [

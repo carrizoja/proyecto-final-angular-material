@@ -1,45 +1,62 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../models/student.model';
 import { BehaviorSubject, Observable, take, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentsService {
-  private students = new BehaviorSubject<Student[]>([
-    new Student (1, 'Jose', 'Carrizo','carrizoja@gmail.com', true),
-    new Student (2, 'Sofi', 'Ceria', 'soficeria@outlook.com', false),
-    new Student (3, 'Walter', 'Leguizamon', 'walterleguizamon@live.com', true),
-    new Student (4, 'Raly', 'Barrionuevo', 'raly.barrionuevo@gmail.com', false),
-  ]);
+  private students = new BehaviorSubject<Student[]>([]);
+  
 
   public students$: Observable<Student[]>;
-  constructor() { 
+  constructor(private httpClient: HttpClient) { 
     this.students$ = this.students.asObservable();
   }
+
+  getStudentsFromAPI(): Observable<Student[]> {
+    return this.httpClient.get<Student[]>('https://63bdfb66f5cfc0949b4fac63.mockapi.io/api/students');
+  }
+
+
+  deleteStudentFromAPI(id: number){
+   
+  return this.httpClient.delete(`https://63bdfb66f5cfc0949b4fac63.mockapi.io/api/students/${id}`) 
+
+     
+    
+  }
+
+addStudentToAPI (newStudentData:Omit<Student, 'id' | 'isActive'>): void {
+  const studentsFromAPI = this.getStudentsFromAPI();
+  studentsFromAPI.pipe(take(1)).subscribe((students) => {
+    const lastId = students[students.length - 1]?.id || 0;
+    this.httpClient.post<Student[]>('https://63bdfb66f5cfc0949b4fac63.mockapi.io/api/students', new Student(lastId + 1, newStudentData.firstName, newStudentData.lastName, newStudentData.email, true)).subscribe((resp) => {
+      console.log(resp);
+    })
+  } 
+  )
+}
+
+editStudentFromAPI(id: number, data:Partial<Student>): void {
+  const studentsFromAPI = this.getStudentsFromAPI();
+  studentsFromAPI.pipe(take(1)).subscribe((students) => {
+    this.students.next(students.map((s) => s.id === id ? {...s, ...data} : s))
+    
+
+  })
+  this.httpClient.put<Student[]>(`https://63bdfb66f5cfc0949b4fac63.mockapi.io/api/students/${id}`, data).subscribe((resp) => {
+    console.log(resp);
+  })
+  
+}
 
  AddStudent (newStudentData: Omit<Student, 'id' | 'isActive'>): void {
    this.students.pipe(take(1)).subscribe((students) => {
       const lastId = students[students.length - 1]?.id || 0;
       this.students.next([...students, new Student(lastId + 1, newStudentData.firstName, newStudentData.lastName, newStudentData.email, true)])
    })
-  }
-
-EditStudent(id: number, data:Partial<Student>): void {
-  this.students.pipe(take(1)).subscribe((students) => {
-    this.students.next(students.map(
-      (s) => s.id === id
-      ? new Student (
-        s.id,
-        data.firstName || s.firstName,
-        data.lastName || s.lastName,
-        data.email || s.email,
-        data.isActive || s.isActive
-      )
-      : s
-    )
-    )
-    })
   }
 
   removeStudent(id:number): void {
