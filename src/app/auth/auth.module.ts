@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-/* import { LoginPageComponent } from '../auth/pages/login-page/login-page.component' */
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,7 +11,6 @@ import { PagesAuthModule } from './pages/pages-auth.module';
 
 @NgModule({
   declarations: [
-   /*  LoginPageComponent */
   ],
   imports: [
     CommonModule,

@@ -25,7 +25,7 @@ export class AuthService {
     .pipe(
       tap((data) => localStorage.setItem('token', data.token)),
       mergeMap(() =>
-        this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
+        this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/9`)
       ),
       map(
         ({data})=> 
@@ -55,7 +55,7 @@ export class AuthService {
         (token) => {
           if (!token) throw new Error('Invalid token')
         }),
-        mergeMap(() => this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/7`)
+        mergeMap(() => this.httpClient.get<SingleUserResponse>(`${this.apiUrl}/users/9`)
         ),
         tap(
           ({data}) => this.sessionService.setUser(
