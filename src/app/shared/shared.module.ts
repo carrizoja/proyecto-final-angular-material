@@ -6,7 +6,7 @@ import { MyMaterialModule } from './modules/my-material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinner.component';
+
 
 
 
@@ -17,7 +17,6 @@ import { CustomSpinnerComponent } from './components/custom-spinner/custom-spinn
    ErrorHelperComponent,
     ThemeSwitcherComponent,
     NotFoundComponent,
-    CustomSpinnerComponent
 
   ],
   imports: [

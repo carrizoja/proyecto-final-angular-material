@@ -4,10 +4,18 @@ import { BehaviorSubject, Observable, take, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.students';
 
+export interface IStudentsService {
+/*   products$: Observable<Student[]>; */
+  getStudentsFromAPI(): void;
+  deleteStudentFromAPI(id: number): void;
+  addStudentToAPI(newStudentData: Omit<Student, 'id' | 'isActive'>): void;
+  editStudentFromAPI(id: number, data:Partial<Student>): void  ;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class StudentsService {
+export class StudentsService implements IStudentsService {
   private students = new BehaviorSubject<Student[]>([]);
   
 

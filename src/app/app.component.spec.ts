@@ -3,6 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+
+  // It helps with a clean test of every it
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
