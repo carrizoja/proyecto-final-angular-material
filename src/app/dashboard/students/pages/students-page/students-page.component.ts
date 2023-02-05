@@ -3,8 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Student } from 'src/app/models/student.model';
 import { StudentModalComponent } from '../../components/student-modal/student-modal.component';
 import { StudentModalDescriptionComponent } from '../../components/student-modal-description/student-modal-description.component';
-/* import { StudentDialogDescriptionComponent } from 'src/app/shared/components/student-dialog-description/student-dialog-description.component';
-import { StudentDialogComponent } from '../../shared/components/student-dialog/student-dialog.component'; */
 import { StudentsService } from '../../services/students.service';
 import { Observable } from 'rxjs';
 @Component({

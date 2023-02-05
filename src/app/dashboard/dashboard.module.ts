@@ -9,6 +9,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { MyMaterialModule } from '../shared/modules/my-material.module';
 import { FooterComponent } from './layout/footer/footer.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 
 
@@ -19,7 +20,8 @@ import { FooterComponent } from './layout/footer/footer.component';
     HeaderComponent,
     NavMenuComponent,
     PageWrapperComponent,
-    FooterComponent
+    FooterComponent,
+    MyProfileComponent
   ],
   imports: [
     CommonModule,

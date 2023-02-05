@@ -1,8 +1,10 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { SessionService } from 'src/app/core/services/session.service';
+import { AppState } from 'src/app/core/models/app-state.model';
 import { User } from 'src/app/models/user.model';
+import { authenticatedUserSelector } from '../../../auth/store/auth.selectors';
 
 @Component({
   selector: 'app-header',
@@ -11,16 +13,13 @@ import { User } from 'src/app/models/user.model';
 })
 export class HeaderComponent implements OnDestroy {
   @Output() toggleSidebar = new EventEmitter()
-  public user: User | null = null;
-  private destroyed$ = new Subject();
-  constructor(private readonly sessionService: SessionService, public readonly authService: AuthService) {
-    this.sessionService.user$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((user) => {
-        if (user) this.user = user;
-      })
+
+ public user: Observable<User | null>
+ 
+  constructor(private readonly store: Store<AppState>, public readonly authService: AuthService) {
+  this.user = this.store.select(authenticatedUserSelector)
   }
   ngOnDestroy(): void {
-    this.destroyed$.next(true)
+    
   }
 }

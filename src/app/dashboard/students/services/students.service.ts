@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.students';
 
 export interface IStudentsService {
-/*   products$: Observable<Student[]>; */
+  students$: Observable<Student[]>;
   getStudentsFromAPI(): void;
   deleteStudentFromAPI(id: number): void;
   addStudentToAPI(newStudentData: Omit<Student, 'id' | 'isActive'>): void;
