@@ -12,6 +12,7 @@ import { Validators } from '@angular/forms';
 })
 
 export class StudentModalComponent  {
+
 firstNameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
 lastNameControl = new FormControl('', [Validators.required,Validators.minLength(2)] );
 emailControl = new FormControl('', [Validators.required, Validators.email]);

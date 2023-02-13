@@ -13,11 +13,12 @@ export class CourseModalComponent {
 
   nameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
   courseCodeControl = new FormControl('', [Validators.required,Validators.minLength(5), Validators.maxLength(5)] );
-  isActiveToogle = true;
+  isActiveToogle = new FormControl(true);
 
 courseForm = new FormGroup({
   name: this.nameControl,
   courseCode: this.courseCodeControl,
+  isActive: this.isActiveToogle,
  
 })
 
@@ -25,6 +26,8 @@ constructor(private readonly dialogRef: DialogRef, @Inject(MAT_DIALOG_DATA) publ
   if (data) {
     this.nameControl.setValue(data.name);
     this.courseCodeControl.setValue(data.courseCode);
+    this.isActiveToogle.setValue(data.isActive);
+
   
   }
  }

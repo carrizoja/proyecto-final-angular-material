@@ -1,27 +1,36 @@
-<h1 mat-dialog-title>Add Student</h1>
+<h1 mat-dialog-title>Add Registration</h1>
 <div mat-dialog-content>
     <form class="flex flex-column" [formGroup]="registrationForm">
-        <div class="mb-2">
-            <mat-form-field appearance="fill">
-                <mat-label>First Name</mat-label>
-                <input [formControl]="firstNameControl" matInput>
-                <app-error-helper [control]="firstNameControl"></app-error-helper>
-            </mat-form-field>
-        </div>
+
         <mat-form-field appearance="fill">
-            <mat-label>Lastname</mat-label>
-            <input [formControl]="lastNameControl" matInput>
-            <app-error-helper [control]="lastNameControl"></app-error-helper>
+            <mat-label>Registration Code</mat-label>
+            <input [formControl]="registrationCodeControl" matInput>
+            <app-error-helper [control]="registrationCodeControl"></app-error-helper>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Select Student</mat-label>
+            <mat-select formControlName="studentFullName">
+                <mat-option *ngFor="let student of students" [value]="{firstName: student.firstName, lastName:student.lastName}">
+                    {{student.id + "-" + student.firstName + ' ' + student.lastName}}
+                </mat-option>
+            </mat-select>
+
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Course Code</mat-label>
-            <input [formControl]="courseCodeControl" matInput>
-            <app-error-helper [control]="courseCodeControl"></app-error-helper>
+            <mat-label>Select Course</mat-label>
+            <mat-select formControlName="courseName">
+                <mat-option *ngFor="let course of courses" [value]="{courseId: course.id,courseName: course.name}">
+                    {{course.id + "-" + course.name}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label>Course Name</mat-label>
-            <input [formControl]="courseNameControl" matInput>
-            <app-error-helper [control]="courseNameControl"></app-error-helper>
+            <mat-label>Date Inscription</mat-label>
+            <input formControlName="date" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
     </form>

@@ -5,6 +5,11 @@ import { RegistrationsService } from '../../services/registrations.service';
 import { RegistrationModalComponent } from '../../components/registration-modal/registration-modal.component';
 import { RegistrationModalDescriptionComponent } from '../../components/registration-modal-description/registration-modal-description.component';
 import { Observable } from 'rxjs';
+import { DateAdapter } from '@angular/material/core';
+import { User } from 'src/app/models/user.model';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/core/models/app-state.model';
+import { authenticatedUserSelector } from 'src/app/auth/store/auth.selectors';
 
 
 
@@ -14,16 +19,33 @@ import { Observable } from 'rxjs';
   styleUrls: ['./registrations-page.component.scss']
 })
 export class RegistrationsPageComponent implements OnInit{
-  displayedColumns = ['firstName','lastName', 'courseCode', 'courseName','edit','delete', 'description']
+  isAdmin = true;
+  public user: Observable<User | null>;
+  displayedColumns = ['registrationCode', 'studentName', 'courseName','date', 'edit','delete', 'description']
   public hover: number = 0;
   registrations: Observable<Registration[]>;
  
-  constructor(private readonly dialogService: MatDialog, private registrationsService: RegistrationsService) {
+  constructor(private readonly dialogService: MatDialog,
+     private registrationsService: RegistrationsService,
+     private dateAdapter: DateAdapter<Date>,
+     private readonly store: Store<AppState>
+     ) {
+    this.dateAdapter.setLocale('en-GB');
     this.registrations = this.registrationsService.getRegistrationsFromAPI();
+    this.user = this.store.select(authenticatedUserSelector)
    }
 
   ngOnInit(): void {
     this.loadAll(); 
+    this.user.subscribe((user) => {
+      if (user) {
+        
+        if (user.rol !== 'admin') {
+          this.isAdmin = false;
+          this.displayedColumns = ['registrationCode', 'studentName', 'courseName','date','description']
+        }
+      }
+    })
     
    }
 
@@ -36,7 +58,7 @@ export class RegistrationsPageComponent implements OnInit{
     const dialog = this.dialogService.open(RegistrationModalComponent)
     dialog.afterClosed().subscribe((data) => {
       if (data) {
-        this.registrationsService.addRegistrationToAPI({firstName: data.firstName, lastName:data.lastName, courseCode:data.courseCode, courseName:data.courseName});
+        this.registrationsService.addRegistrationToAPI({registrationCode: data.registrationCode, studentFullName: data.studentFullName, courseName:data.courseName,date: data.date});
               
       }
       // Subscribe to refresh table after adding data

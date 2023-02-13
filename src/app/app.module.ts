@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 /* import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';  */
+import { CoursesModule } from './dashboard/courses/courses.module';
 
 
 
@@ -38,7 +39,10 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';  */
         HttpClientModule,
         AuthModule,
         AppStoreModule,
-        EffectsModule.forRoot([])
+        CoursesModule,
+        EffectsModule.forRoot([]),
+
+    
        
      
     ]

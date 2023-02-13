@@ -42,7 +42,7 @@ addStudentToAPI (newStudentData:Omit<Student, 'id' | 'isActive'>): void {
   studentsFromAPI.pipe(take(1)).subscribe((students) => {
     const lastId = students[students.length - 1]?.id || 0;
     this.httpClient.post<Student[]>(`${environment.URLbase}api/students`, new Student(lastId + 1, newStudentData.firstName, newStudentData.lastName, newStudentData.email, true)).subscribe((resp) => {
-      console.log(resp);
+
     })
   } 
   )

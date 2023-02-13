@@ -18,7 +18,8 @@ import { PagesAuthModule } from './pages/pages-auth.module';
     HttpClientModule,
     AuthRoutingModule,
     SharedModule,
-    PagesAuthModule
+    PagesAuthModule,
+    AuthRoutingModule
   ],
   providers: [
     AuthService

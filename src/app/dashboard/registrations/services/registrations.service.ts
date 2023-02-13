@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Registration } from 'src/app/core/models/registration.model';
 import { BehaviorSubject, Observable, take, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.registrations';
+import { Registration } from 'src/app/core/models/registration.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +31,17 @@ export class RegistrationsService {
     const registrationsFromAPI = this.getRegistrationsFromAPI();
     registrationsFromAPI.pipe(take(1)).subscribe((registrations) => {
       const lastId = registrations[registrations.length - 1]?.id || 0;
-      this.httpClient.post<Registration[]>(`${environment.URLbase}registrations`, new Registration(lastId + 1, newRegistrationData.firstName, newRegistrationData.lastName, newRegistrationData.courseCode, newRegistrationData.courseName)).subscribe((resp) => {
-        console.log(resp);
+
+      // Convert the date format into dd/mm/yyyy
+      let dateString = newRegistrationData.date;
+      let date = new Date(dateString);
+      let day = date.getDate().toString().padStart(2,'0');
+      let month = (date.getMonth() + 1).toString().padStart(2,'0');
+      let year = date.getFullYear();
+      let newDate = `${day}/${month}/${year}`;
+      
+      this.httpClient.post<Registration[]>(`${environment.URLbase}registrations`, new Registration(lastId + 1, newRegistrationData.registrationCode, newRegistrationData.studentFullName, newRegistrationData.courseName,  newDate)).subscribe((resp) => {
+        
       })
     } 
     )
@@ -55,7 +64,7 @@ export class RegistrationsService {
     this.registrations.pipe(take(1)).subscribe((registrations) => {
       this.registrations.next(registrations.map((r) => {
         if (r.id === registration.id) {
-          return new Registration(r.id, r.firstName, r.lastName, r.courseCode, r.courseName)
+          return new Registration(r.id, r.studentFullName, r.courseName, r.registrationCode, r.date)
         }
         return r
       }))

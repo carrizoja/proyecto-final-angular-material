@@ -4,6 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthStoreModule } from './auth/auth-store.module';
 import { UsersStoreModule } from './dashboard/users/users-store.module';
+import { EffectsModule } from '@ngrx/effects';
 
 
 
@@ -12,6 +13,7 @@ import { UsersStoreModule } from './dashboard/users/users-store.module';
   imports: [
     CommonModule,
     StoreModule.forRoot(),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     AuthStoreModule,
     UsersStoreModule

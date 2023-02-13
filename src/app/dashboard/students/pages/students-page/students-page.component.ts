@@ -5,22 +5,42 @@ import { StudentModalComponent } from '../../components/student-modal/student-mo
 import { StudentModalDescriptionComponent } from '../../components/student-modal-description/student-modal-description.component';
 import { StudentsService } from '../../services/students.service';
 import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user.model';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/core/models/app-state.model';
+import { authenticatedUserSelector } from 'src/app/auth/store/auth.selectors';
 @Component({
   selector: 'app-students-page',
   templateUrl: './students-page.component.html',
   styleUrls: ['./students-page.component.scss']
 })
 export class StudentsPageComponent implements OnInit{
+  public user: Observable<User | null>
+  isAdmin = true;
+
   displayedColumns = ['firstName', 'lastName','email', 'isActive', 'edit', 'delete', 'description']
   public hover: number = 0;
   students: Observable<Student[]>
  
 
-  constructor(private readonly dialogService: MatDialog, private studentsService: StudentsService) {
+  constructor(private readonly dialogService: MatDialog,
+     private studentsService: StudentsService,
+     private readonly store: Store<AppState>,
+     ) {
     this.students = this.studentsService.getStudentsFromAPI();
+    this.user = this.store.select(authenticatedUserSelector)
    }
   ngOnInit(): void {
-   this.loadAll(); 
+   this.loadAll();
+    this.user.subscribe((user) => {
+      if (user) {
+        
+        if (user.rol !== 'admin') {
+          this.isAdmin = false;
+          this.displayedColumns = ['firstName', 'lastName','email', 'description']
+        }
+      }
+    })
    
   }
 

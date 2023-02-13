@@ -12,29 +12,29 @@
         </th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
     </ng-container>
-    <ng-container matColumnDef="firstName">
+    <ng-container matColumnDef="registrationCode">
         <th mat-header-cell *matHeaderCellDef>
-            <p appRegistrationsPage>First Name</p>
+            <p appRegistrationsPage>Registration Code</p>
         </th>
-        <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+        <td mat-cell *matCellDef="let element">{{element.registrationCode}}</td>
     </ng-container>
-    <ng-container matColumnDef="lastName">
+    <ng-container matColumnDef="studentName">
         <th mat-header-cell *matHeaderCellDef>
-            <p appRegistrationsPage>Last Name</p>
+            <p appRegistrationsPage>Student Name</p>
         </th>
-        <td mat-cell *matCellDef="let element">{{element.lastName}}</td>
-    </ng-container>
-    <ng-container matColumnDef="courseCode">
-        <th mat-header-cell *matHeaderCellDef>
-            <p appRegistrationsPage>Course Code</p>
-        </th>
-        <td mat-cell *matCellDef="let element">{{element.courseCode}}</td>
+        <td mat-cell *matCellDef="let element">{{element.studentFullName.firstName + " " + element.studentFullName.lastName}}</td>
     </ng-container>
     <ng-container matColumnDef="courseName">
         <th mat-header-cell *matHeaderCellDef>
             <p appRegistrationsPage>Course Name</p>
         </th>
-        <td mat-cell *matCellDef="let element">{{element.courseName}}</td>
+        <td mat-cell *matCellDef="let element">{{element.courseName.courseId + " - " + element.courseName.courseName}}</td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>
+            <p appRegistrationsPage>Date</p>
+        </th>
+        <td mat-cell *matCellDef="let element">{{element.date}}</td>
     </ng-container>
     <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef>

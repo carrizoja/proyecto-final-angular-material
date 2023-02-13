@@ -1,4 +1,17 @@
-# ProyectoFinalAngularMaterial
+# Proyecto FinalAngular Material
+
+- This is a system created for schools and institutes. You cand use a student, courses and registration CRUD
+- There are two roles: admin and user
+- Data are stored in MOCKAPI.
+
+# Technology Implemented
+
+- Angular Material
+- MockAPI
+- Angular RXJS
+- Angular NGRX
+- Google Icons
+  
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 

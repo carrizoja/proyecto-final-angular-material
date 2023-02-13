@@ -11,7 +11,6 @@ export class RegistrationModalDescriptionComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public registration: Registration) {
   
 
-
   }
 }
 

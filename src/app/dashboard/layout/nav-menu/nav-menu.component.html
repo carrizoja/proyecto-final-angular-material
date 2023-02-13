@@ -4,5 +4,6 @@
     <li><a routerLink="students">Students</a></li>
     <li><a routerLink="courses">Courses</a></li>
     <li><a routerLink="registrations">Registrations</a></li>
-    <li><a routerLink="users">Users</a></li>
+    <!--  disable Users if not an Admin -->
+    <li [ngClass]="{'disabled': !isAdmin}"><a routerLink="users">Users</a></li>
 </ul>

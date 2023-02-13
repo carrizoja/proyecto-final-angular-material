@@ -7,6 +7,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CourseModalComponent } from './components/course-modal/course-modal.component';
 import { CourseModalDescriptionComponent } from './components/course-modal-description/course-modal-description.component';
 import { MyMaterialModule } from 'src/app/shared/modules/my-material.module';
+import { EffectsModule } from '@ngrx/effects';
+import { CourseEffects } from './store/course.effects';
+import { StoreModule } from '@ngrx/store';
+import { courseFeatureKey, reducer } from './store/course.reducer';
 
 
 @NgModule({
@@ -22,7 +26,9 @@ import { MyMaterialModule } from 'src/app/shared/modules/my-material.module';
     CoursesRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    MyMaterialModule
+    MyMaterialModule,
+    StoreModule.forFeature(courseFeatureKey,reducer),
+    EffectsModule.forFeature([CourseEffects])
   ]
 })
 export class CoursesModule { }
